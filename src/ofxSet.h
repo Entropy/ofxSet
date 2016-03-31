@@ -127,8 +127,7 @@ using ofxSet2f = ofxSetX_<ofDefaultVec2, float, 2>;
 using ofxSet3f = ofxSetX_<ofDefaultVec3, float, 3>;
 using ofxSet4f = ofxSetX_<ofDefaultVec4, float, 4>;
 
-//typedef ofxSet_<glm::tvec1<int>, int, 1> ofxSet1i;
-//typedef ofxSet_<glm::tvec2<int>, int, 2> ofxSet12;
-//typedef ofxSet_<glm::tvec3<int>, int, 3> ofxSet13;
-//typedef ofxSet_<glm::tvec4<int>, int, 4> ofxSet14;
-
+using ofxSet1i = ofxSet1_<int>;
+using ofxSet2i = ofxSetX_<glm::tvec2<int>, int, 2>;
+using ofxSet3i = ofxSetX_<glm::tvec3<int>, int, 3>;
+using ofxSet4i = ofxSetX_<glm::tvec4<int>, int, 4>;
