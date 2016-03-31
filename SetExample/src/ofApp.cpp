@@ -8,6 +8,21 @@ const float kWorldSize = 500.0f;
 void ofApp::setup()
 {
     ofBackground(0);
+
+    ofxSet1f set1f;
+    for (int i = 0; i < 10; i++) {
+        set1f.add(ofRandom(-100, 100));
+    }
+
+    int idx = 0;
+    for (auto f : set1f.getElements()) {
+        cout << idx++ << ": " << f << endl;
+    }
+
+    cout << "Range  = " << set1f.getMin() << " to " << set1f.getMax() << endl;
+    cout << "Center = " << set1f.getCenter() << endl;
+    cout << "Mean   = " << set1f.getMean() << endl;
+    cout << "Median = " << set1f.getMedian() << endl;
 }
 
 //--------------------------------------------------------------
@@ -15,10 +30,10 @@ void ofApp::update()
 {
     if (numToAdd)
     {
-        glm::vec3 v = { ofRandom(rangeMin.x, rangeMax.x),
-                        ofRandom(rangeMin.y, rangeMax.y),
-                        ofRandom(rangeMin.z, rangeMax.z) };
-        mesh.addVertex(ofVec3f(v.x, v.y, v.z));
+        ofDefaultVec3 v = ofDefaultVec3(ofRandom(rangeMin.x, rangeMax.x),
+                                        ofRandom(rangeMin.y, rangeMax.y),
+                                        ofRandom(rangeMin.z, rangeMax.z));
+        mesh.addVertex(v);
         set3f.add(v);
 
         --numToAdd;
@@ -104,12 +119,12 @@ void ofApp::keyPressed(int key)
         numToAdd += 100;
 
         // Adjust the range for fun.
-        rangeMin.set(ofRandom(-kWorldSize * 0.5f, 0.0f),
-                     ofRandom(-kWorldSize * 0.5f, 0.0f),
-                     ofRandom(-kWorldSize * 0.5f, 0.0f));
-        rangeMax.set(ofRandom(0.0f, kWorldSize * 0.5f),
-                     ofRandom(0.0f, kWorldSize * 0.5f),
-                     ofRandom(0.0f, kWorldSize * 0.5f));
+        rangeMin = ofDefaultVec3(ofRandom(-kWorldSize * 0.5f, 0.0f),
+                                 ofRandom(-kWorldSize * 0.5f, 0.0f),
+                                 ofRandom(-kWorldSize * 0.5f, 0.0f));
+        rangeMax = ofDefaultVec3(ofRandom(0.0f, kWorldSize * 0.5f),
+                                 ofRandom(0.0f, kWorldSize * 0.5f),
+                                 ofRandom(0.0f, kWorldSize * 0.5f));
     }
 }
 

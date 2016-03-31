@@ -28,5 +28,5 @@ public:
     ofxSet3f set3f;
 
     int numToAdd;
-    ofVec3f rangeMin, rangeMax;
+    ofDefaultVec3 rangeMin, rangeMax;
 };
