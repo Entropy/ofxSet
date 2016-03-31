@@ -7,10 +7,8 @@
 //
 
 #pragma once
-#include <glm/glm.hpp>
-#include <glm/gtx/string_cast.hpp>
 
-#include "ofMain.h"
+#include <glm/glm.hpp>
 
 template <typename T, typename U, size_t D>
 class ofxSet_
@@ -60,7 +58,7 @@ protected:
     bool m_bDirtySpan;
 };
 
-typedef ofxSet_<glm::vec1, float, 1> ofxSet1f;
+typedef ofxSet_<glm::tvec1<float>, float, 1> ofxSet1f;
 typedef ofxSet_<glm::vec2, float, 2> ofxSet2f;
 typedef ofxSet_<glm::vec3, float, 3> ofxSet3f;
 typedef ofxSet_<glm::vec4, float, 4> ofxSet4f;
