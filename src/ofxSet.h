@@ -8,40 +8,38 @@
 
 #pragma once
 
-#include <glm/glm.hpp>
+#include "ofMain.h"
 
-template <typename T, typename U, size_t D>
-class ofxSet_
+//--------------------------------------------------------------
+template <typename T>
+class ofxSet__
 {
 public:
-    ofxSet_();
-    ~ofxSet_();
+    ofxSet__();
+    virtual ~ofxSet__();
 
-    void add(T& e);
-    void add(U c);
+    virtual void add(const T& e);
+    virtual bool remove(const T& e);
+    virtual void clear();
 
-    void remove(T& e);
     void toggle(T& e);
 
-    bool contains(T& e);
-    void clear();
+    bool contains(T& e) const;
 
-    T& getMin();
-    T& getMax();
-    T& getMean();
-    T& getMedian();
+    size_t size() const;
+    const std::vector<T>& getElements() const;
+
+    virtual T& getMin() = 0;
+    virtual T& getMax() = 0;
+    virtual T& getMean() = 0;
+    virtual T& getMedian() = 0;
     T& getCenter();
     T& getSpan();
-
-    size_t size();
-
-    const std::vector<T>& getElements();
 
 protected:
     void setDirty();
 
     std::vector<T> m_elements;
-    std::vector<std::multiset<U>> m_components;
 
     T m_min;
     T m_max;
@@ -58,258 +56,79 @@ protected:
     bool m_bDirtySpan;
 };
 
-typedef ofxSet_<glm::tvec1<float>, float, 1> ofxSet1f;
-typedef ofxSet_<glm::vec2, float, 2> ofxSet2f;
-typedef ofxSet_<glm::vec3, float, 3> ofxSet3f;
-typedef ofxSet_<glm::vec4, float, 4> ofxSet4f;
+//--------------------------------------------------------------
+template <typename T>
+class ofxSet1_
+: public ofxSet__<T>
+{
+public:
+    void add(const T& e) override;
+    bool remove(const T& e) override;
 
-typedef ofxSet_<glm::tvec1<int>, int, 1> ofxSet1i;
-typedef ofxSet_<glm::tvec2<int>, int, 2> ofxSet12;
-typedef ofxSet_<glm::tvec3<int>, int, 3> ofxSet13;
-typedef ofxSet_<glm::tvec4<int>, int, 4> ofxSet14;
+    void clear() override;
+
+    using ofxSet__<T>::size;
+
+    T& getMin() override;
+    T& getMax() override;
+    T& getMean() override;
+    T& getMedian() override;
+
+protected:
+    std::multiset<T> m_ordered;
+
+    using ofxSet__<T>::m_min;
+    using ofxSet__<T>::m_max;
+    using ofxSet__<T>::m_mean;
+    using ofxSet__<T>::m_median;
+
+    using ofxSet__<T>::m_bDirtyMin;
+    using ofxSet__<T>::m_bDirtyMax;
+    using ofxSet__<T>::m_bDirtyMean;
+    using ofxSet__<T>::m_bDirtyMedian;
+};
 
 //--------------------------------------------------------------
 template <typename T, typename U, size_t D>
-ofxSet_<T, U, D>::ofxSet_()
+class ofxSetX_
+: public ofxSet__<T>
 {
-    m_components.resize(D);
-    setDirty();
-}
+public:
+    void add(const T& e) override;
+    bool remove(const T& e) override;
 
-//--------------------------------------------------------------
-template <typename T, typename U, size_t D>
-ofxSet_<T, U, D>::~ofxSet_()
-{
-    clear();
-}
+    void clear() override;
 
-//--------------------------------------------------------------
-template <typename T, typename U, size_t D>
-void ofxSet_<T, U, D>::setDirty()
-{
-    m_bDirtyMin = true;
-    m_bDirtyMax = true;
-    m_bDirtyMean = true;
-    m_bDirtyMedian = true;
-    m_bDirtyCenter = true;
-    m_bDirtySpan = true;
-}
+    using ofxSet__<T>::size;
 
-//--------------------------------------------------------------
-template <typename T, typename U, size_t D>
-void ofxSet_<T, U, D>::add(T& e)
-{
-    m_elements.push_back(e);
+    T& getMin() override;
+    T& getMax() override;
+    T& getMean() override;
+    T& getMedian() override;
 
-    for (int i = 0; i < D; ++i)
-    {
-        m_components[i].insert(e[i]);
-    }
+protected:
+    ofxSet1_<U> m_components[D];
 
-    setDirty();
-}
+    using ofxSet__<T>::m_min;
+    using ofxSet__<T>::m_max;
+    using ofxSet__<T>::m_mean;
+    using ofxSet__<T>::m_median;
 
-//--------------------------------------------------------------
-template <typename T, typename U, size_t D>
-void ofxSet_<T, U, D>::add(U c)
-{
-    T e(c);
-    add(e);
-}
+    using ofxSet__<T>::m_bDirtyMin;
+    using ofxSet__<T>::m_bDirtyMax;
+    using ofxSet__<T>::m_bDirtyMean;
+    using ofxSet__<T>::m_bDirtyMedian;
+};
 
-//--------------------------------------------------------------
-template <typename T, typename U, size_t D>
-void ofxSet_<T, U, D>::remove(T& e)
-{
-    auto it = m_elements.find(e);
-    if (it == m_elements.end()) return;
+#include "ofxSet.inl"
 
-    m_elements.erase(it);
+using ofxSet1f = ofxSet1_<float>;
+using ofxSet2f = ofxSetX_<ofDefaultVec2, float, 2>;
+using ofxSet3f = ofxSetX_<ofDefaultVec3, float, 3>;
+using ofxSet4f = ofxSetX_<ofDefaultVec4, float, 4>;
 
-    for (int i = 0; i < D; ++i)
-    {
-        auto it = m_components[i].find(e[i]);
-        m_components[i].erase(it);
-    }
+//typedef ofxSet_<glm::tvec1<int>, int, 1> ofxSet1i;
+//typedef ofxSet_<glm::tvec2<int>, int, 2> ofxSet12;
+//typedef ofxSet_<glm::tvec3<int>, int, 3> ofxSet13;
+//typedef ofxSet_<glm::tvec4<int>, int, 4> ofxSet14;
 
-    setDirty();
-}
-
-//--------------------------------------------------------------
-template <typename T, typename U, size_t D>
-void ofxSet_<T, U, D>::toggle(T& e)
-{
-    if (contains(e))
-    {
-        remove(e);
-    }
-    else
-    {
-        add(e);
-    }
-}
-
-//--------------------------------------------------------------
-template <typename T, typename U, size_t D>
-bool ofxSet_<T, U, D>::contains(T& e)
-{
-    return (m_elements.find(e) != m_elements.end());
-}
-
-//--------------------------------------------------------------
-template <typename T, typename U, size_t D>
-void ofxSet_<T, U, D>::clear()
-{
-    m_elements.clear();
-
-    for (auto& it : m_components)
-    {
-        it.clear();
-    }
-    m_components.clear();
-
-    setDirty();
-}
-
-//--------------------------------------------------------------
-template <typename T, typename U, size_t D>
-T& ofxSet_<T, U, D>::getMin()
-{
-    if (m_bDirtyMin)
-    {
-        if (size())
-        {
-            for (int i = 0; i < D; ++i)
-            {
-                m_min[i] = *m_components[i].begin();
-            }
-        }
-        else
-        {
-            m_min = T(0);
-        }
-
-        m_bDirtyMin = false;
-    }
-
-    return m_min;
-}
-
-//--------------------------------------------------------------
-template <typename T, typename U, size_t D>
-T& ofxSet_<T, U, D>::getMax()
-{
-    if (m_bDirtyMax)
-    {
-        if (size())
-        {
-            for (int i = 0; i < D; ++i)
-            {
-                m_max[i] = *m_components[i].rbegin();
-            }
-        }
-        else
-        {
-            m_max = T(0);
-        }
-
-        m_bDirtyMax = false;
-    }
-
-    return m_max;
-}
-
-//--------------------------------------------------------------
-template <typename T, typename U, size_t D>
-T& ofxSet_<T, U, D>::getMean()
-{
-    if (m_bDirtyMean)
-    {
-        m_mean = T(0);
-
-        if (size())
-        {
-            for (int i = 0; i < D; ++i)
-            {
-                for (auto& it : m_components[i])
-                {
-                    m_mean[i] += it;
-                }
-                m_mean[i] /= m_components[i].size();
-            }
-        }
-
-        m_bDirtyMean = false;
-    }
-
-    return m_mean;
-}
-
-//--------------------------------------------------------------
-template <typename T, typename U, size_t D>
-T& ofxSet_<T, U, D>::getMedian()
-{
-    if (m_bDirtyMedian)
-    {
-        if (size())
-        {
-            for (int i = 0; i < D; ++i)
-            {
-                size_t offset = m_components[i].size() / 2;
-                auto it = m_components[i].begin();
-                std::advance(it, offset);
-                m_median[i] = *it;
-            }
-        }
-        else
-        {
-            m_median = T(0);
-        }
-
-        m_bDirtyMedian = false;
-    }
-
-    return m_median;
-}
-
-//--------------------------------------------------------------
-template <typename T, typename U, size_t D>
-T& ofxSet_<T, U, D>::getCenter()
-{
-    if (m_bDirtyCenter)
-    {
-        m_center = getMin() + getSpan() * 0.5f;
-
-        m_bDirtyCenter = false;
-    }
-
-    return m_center;
-}
-
-//--------------------------------------------------------------
-template <typename T, typename U, size_t D>
-T& ofxSet_<T, U, D>::getSpan()
-{
-    if (m_bDirtySpan)
-    {
-        m_span = getMax() - getMin();
-
-        m_bDirtySpan = false;
-    }
-
-    return m_span;
-}
-
-//--------------------------------------------------------------
-template <typename T, typename U, size_t D>
-size_t ofxSet_<T, U, D>::size()
-{
-    return m_elements.size();
-}
-
-//--------------------------------------------------------------
-template <typename T, typename U, size_t D>
-const std::vector<T>& ofxSet_<T, U, D>::getElements()
-{
-    return m_elements;
-}
