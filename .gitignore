@@ -26,3 +26,21 @@
 *.exe
 *.out
 *.app
+
+# Xcode
+*.mode*
+*.pbxuser
+*.xcworkspace
+xcuserdata/
+xcshareddata/
+
+# openFrameworks
+build/
+obj/
+*.o
+openFrameworks.a
+openFrameworksDebug.a
+openFrameworksUniversal.a
+*.app
+
+
