@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "ofMain.h"
+#include "glm/glm.hpp"
 
 //--------------------------------------------------------------
 template <typename T>
@@ -123,9 +123,9 @@ protected:
 #include "ofxSet.inl"
 
 using ofxSet1f = ofxSet1_<float>;
-using ofxSet2f = ofxSetX_<ofDefaultVec2, float, 2>;
-using ofxSet3f = ofxSetX_<ofDefaultVec3, float, 3>;
-using ofxSet4f = ofxSetX_<ofDefaultVec4, float, 4>;
+using ofxSet2f = ofxSetX_<glm::vec2, float, 2>;
+using ofxSet3f = ofxSetX_<glm::vec3, float, 3>;
+using ofxSet4f = ofxSetX_<glm::vec4, float, 4>;
 
 using ofxSet1i = ofxSet1_<int>;
 using ofxSet2i = ofxSetX_<glm::tvec2<int>, int, 2>;
