@@ -144,7 +144,7 @@ ofxRangeX_<T, U>::~ofxRangeX_()
 template <typename T, typename U>
 void ofxRangeX_<T, U>::add(const T& e)
 {
-    for (int i = 0; i < e.size(); ++i)
+    for (int i = 0; i < e.length(); ++i)
     {
 		m_min[i] = std::min(m_min[i], e[i]);
 		m_max[i] = std::max(m_max[i], e[i]);
@@ -159,7 +159,7 @@ void ofxRangeX_<T, U>::clear()
 {
 	ofxRange__<T>::clear();
 	
-	for (int i = 0; i < m_min.size(); ++i)
+	for (int i = 0; i < m_min.length(); ++i)
 	{
 		m_min[i] = std::numeric_limits<U>::max();
 		m_max[i] = std::numeric_limits<U>::min();
@@ -170,7 +170,7 @@ void ofxRangeX_<T, U>::clear()
 template <typename T, typename U>
 bool ofxRangeX_<T, U>::contains(const T& e) const
 {
-	for (int i = 0; i < e.size(); ++i)
+	for (int i = 0; i < e.length(); ++i)
 	{
 		if (m_min[i] > e[i] || e[i] > m_max[i])
 		{
