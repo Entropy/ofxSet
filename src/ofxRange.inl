@@ -6,7 +6,6 @@
 //
 //
 
-#include "ofxRange.h"
 
 //--------------------------------------------------------------
 // Base Class
@@ -109,7 +108,7 @@ void ofxRange1_<T>::add(const T& e)
 	m_min = std::min(m_min, e);
 	m_max = std::max(m_max, e);
 
-	setDirty();
+	ofxRange__<T>::setDirty();
 }
 
 //--------------------------------------------------------------
@@ -150,7 +149,7 @@ void ofxRangeX_<T, U>::add(const T& e)
 		m_max[i] = std::max(m_max[i], e[i]);
     }
 
-	setDirty();
+	ofxRange__<T>::setDirty();
 }
 
 //--------------------------------------------------------------
