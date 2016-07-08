@@ -34,6 +34,11 @@
 xcuserdata/
 xcshareddata/
 
+# Visual Studio
+*.db
+*.opendb
+*.exp
+
 # openFrameworks
 build/
 obj/
@@ -42,5 +47,3 @@ openFrameworks.a
 openFrameworksDebug.a
 openFrameworksUniversal.a
 *.app
-
-
