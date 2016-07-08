@@ -1,7 +1,5 @@
 #include "ofApp.h"
 
-#include <glm/gtx/string_cast.hpp>
-
 const float kWorldSize = 500.0f;
 
 //--------------------------------------------------------------
