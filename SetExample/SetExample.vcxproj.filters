@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\ofApp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons">
+      <UniqueIdentifier>{03a9a806-3105-48ae-a6f8-2b7dbe92b0ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxSet">
+      <UniqueIdentifier>{2c33ea46-24cc-4225-8807-626cac1174a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxSet\src">
+      <UniqueIdentifier>{c5554b36-6295-4eff-b67d-20ce2ad3fc00}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ofApp.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxRange.h">
+      <Filter>addons\ofxSet\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxSet.h">
+      <Filter>addons\ofxSet\src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="icon.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\ofxRange.inl">
+      <Filter>addons\ofxSet\src</Filter>
+    </None>
+    <None Include="..\src\ofxSet.inl">
+      <Filter>addons\ofxSet\src</Filter>
+    </None>
+  </ItemGroup>
+</Project>
