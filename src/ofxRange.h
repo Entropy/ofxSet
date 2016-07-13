@@ -7,7 +7,7 @@
 //
 
 #pragma once
-
+#define GLM_FORCE_SIZE_FUNC
 #include "glm/glm.hpp"
 
 //--------------------------------------------------------------
@@ -24,21 +24,21 @@ public:
 
 	void include(ofxRange__<T>& range);
 
-	T& getMin();
-	T& getMax();
-	T& getSpan();
-	T& getCenter();
+	const T& getMin() const;
+	const T& getMax() const;
+	const T& getSpan() const;
+	const T& getCenter() const;
 
 protected:
     void setDirty();
 
     T m_min;
     T m_max;
-	T m_span;
-	T m_center;
+	mutable T m_span;
+	mutable T m_center;
 
-	bool m_bDirtySpan;
-	bool m_bDirtyCenter;
+	mutable bool m_bDirtySpan;
+	mutable bool m_bDirtyCenter;
 };
 
 //--------------------------------------------------------------

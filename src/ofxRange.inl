@@ -53,21 +53,21 @@ void ofxRange__<T>::include(ofxRange__<T>& range)
 
 //--------------------------------------------------------------
 template <typename T>
-T& ofxRange__<T>::getMin()
+const T& ofxRange__<T>::getMin() const
 {
 	return m_min;
 }
 
 //--------------------------------------------------------------
 template <typename T>
-T& ofxRange__<T>::getMax()
+const T& ofxRange__<T>::getMax() const
 {
 	return m_max;
 }
 
 //--------------------------------------------------------------
 template <typename T>
-T& ofxRange__<T>::getSpan()
+const T& ofxRange__<T>::getSpan() const
 {
 	if (m_bDirtySpan)
 	{
@@ -81,11 +81,11 @@ T& ofxRange__<T>::getSpan()
 
 //--------------------------------------------------------------
 template <typename T>
-T& ofxRange__<T>::getCenter()
+const T& ofxRange__<T>::getCenter() const
 {
     if (m_bDirtyCenter)
     {
-        m_center = getMin() + getSpan() * 0.5f;
+		m_center = getMin() + getSpan() * 0.5f;
 
         m_bDirtyCenter = false;
     }
